@@ -15,10 +15,6 @@ from torch.autograd import Variable
 from Models import * 
 import time
 
-speed_matrix_2015 =  pd.read_pickle('speed_matrix_2015')
-
-speed_matrix = speed_matrix_2015
-
 
 def PrepareDataset(speed_matrix, BATCH_SIZE = 10, seq_len = 10, pred_len = 1, train_propotion = 0.8):
     """ Prepare training and testing datasets and dataloaders.
@@ -66,6 +62,59 @@ def PrepareDataset(speed_matrix, BATCH_SIZE = 10, seq_len = 10, pred_len = 1, tr
     
     return train_dataloader, test_dataloader
 
+def GetAdjacencyMatrix(sensors):
+    fea_size = sensors.shape[0]
+    A = np.zeros((fea_size,fea_size))
+    A = A + np.eye(fea_size)
+    
+    # connect adjacent sensors on same roads
+    for idx in range(fea_size-1):
+        i = idx
+        j = idx + 1
+        loop_i = sensors[i]
+        loop_j = sensors[j]
+        if loop_i[:4] == loop_j[:4]:
+            A[i,j] = 1
+            A[j,i] = 1
+            
+    # connect adjacent sensors in the intesection areas
+    # I-5 & SR-520
+    A[138,199] = 1
+    A[138,36] = 1
+    A[302,137] = 1
+    A[302,198] = 1
+    # I-405 & SR-520
+    A[282,317] = 1
+    A[282,150] = 1
+    A[152,283] = 1
+    A[152,120] = 1
+    A[121,317] = 1
+    A[121,150] = 1
+    A[315,120] = 1
+    A[315,283] = 1
+    # I-5 & I-90
+    A[189,234] = 1
+    A[73,190] = 1
+    A[73,25] = 1
+    A[27,234] = 1
+    # I-405 & I-90
+    A[274,250] = 1
+    A[274,87] = 1
+    A[90,276] = 1
+    A[90,112] = 1
+    A[114,250] = 1
+    A[114,87] = 1
+    A[274,112] = 1
+    A[274,276] = 1
+    
+    for idx in range(fea_size-1):
+        i = idx
+        j = idx + 1
+        if A[i,j] == 1:
+            A[j,i] = 1
+        if A[j,i] == 1:
+            A[i,j] = 1
+    return A
 
 def TrainRNN(train_dataloader, num_epochs = 3):
     
@@ -207,8 +256,82 @@ def TrainLSTM(train_dataloader, num_epochs = 3):
 
     return lstm, losses
 
+def TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 3):
+    
+    inputs, labels = next(iter(train_dataloader))
+    [batch_size, step_size, fea_size] = inputs.size()
+    input_dim = fea_size
+    hidden_dim = fea_size
+    output_dim = fea_size
+    
+    gclstm = GraphConvolutionalLSTM(K, torch.Tensor(A), A.shape[0])
+    
+    gclstm.cuda()
+    
+    loss_fn = torch.nn.MSELoss()
+
+    learning_rate = 1e-5
+    optimizer = torch.optim.RMSprop(gclstm.parameters(), lr = learning_rate)
+    
+    use_gpu = torch.cuda.is_available()
+    
+    losses = []
+    
+    cur_time = time.time()
+    pre_time = time.time()
+    
+    for epoch in range(num_epochs):
+        print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+        print('-' * 10)
+        
+        trained_number = 0
+
+        for data in train_dataloader:
+            inputs, labels = data
+
+            if inputs.shape[0] != batch_size:
+                continue
+
+            if use_gpu:
+                inputs, labels = Variable(inputs.cuda()), Variable(labels.cuda())
+            else: 
+                inputs, labels = Variable(inputs), Variable(labels)
+                
+            gclstm.zero_grad()
+
+            Hidden_State, Cell_State = gclstm.loop(inputs)
+
+            loss = loss_fn(Hidden_State, labels)
+        
+            losses.append(loss.data)
+            
+            optimizer.zero_grad()
+            
+            loss.backward()
+            
+            optimizer.step()
+            
+            trained_number += 1
+
+            if trained_number % 1000 == 0:
+                cur_time = time.time()
+                print('trained #: {}, loss: {}, time: {}'.format( \
+                      trained_number * batch_size, \
+                      np.around([loss.data[0]], decimals=8), \
+                      np.around([cur_time - pre_time], decimals=8) ) )
+                pre_time = cur_time
+
+    return gclstm, losses
+
+
 if __name__ == "__main__":
+    speed_matrix =  pd.read_pickle('speed_matrix_2015')
+    sensors = speed_matrix.columns.values
+    A = GetAdjacencyMatrix(sensors)
+    
     train_dataloader, test_dataloader = PrepareDataset(speed_matrix)
-    rnn, losses = TrainRNN(train_dataloader, num_epochs = 10)
-    lstm, losses = TrainLSTM(train_dataloader, num_epochs = 10)
+#    rnn, rnn_losses = TrainRNN(train_dataloader, num_epochs = 10)
+#    lstm, lstm_losses = TrainLSTM(train_dataloader, num_epochs = 10)
+    K = 3
+    gclstm, gclstm_losses = TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 10)
     

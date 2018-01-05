@@ -5,15 +5,12 @@ Created on Tue Jan  2 23:38:57 2018
 @author: zhiyong
 """
 
-import torch.utils.data as utils
+
 import torch.nn.functional as F
 import torch
-import numpy as np
-import pandas as pd
 import torch.nn as nn
 from torch.autograd import Variable
-import time
-import matplotlib.pyplot as plt
+from Modules import FilterLinear
 
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -23,7 +20,6 @@ class RNN(nn.Module):
         self.i2h = nn.Linear(input_size + hidden_size, hidden_size)
         self.i2o = nn.Linear(input_size + hidden_size, output_size)
     def forward(self, input, hidden):
-        batch_size = input.size(0)
         combined = torch.cat((input, hidden), 1)
 #         print(combined)
         hidden = self.i2h(combined)
@@ -53,7 +49,6 @@ class LSTM(nn.Module):
         self.Cl = nn.Linear(input_size + hidden_size, hidden_size)
         
     def forward(self, input, Hidden_State, Cell_State):
-        batch_size = input.size(0)
         combined = torch.cat((input, Hidden_State), 1)
         f = F.sigmoid(self.fl(combined))
         i = F.sigmoid(self.il(combined))
@@ -105,7 +100,6 @@ class BiLSTM(nn.Module):
         self.Cl_b = nn.Linear(input_size + hidden_size, hidden_size)
         
     def forward(self, input_f, input_b, Hidden_State_f, Cell_State_f, Hidden_State_b, Cell_State_b):
-        batch_size = input_f.size(0)
         
         combined_f = torch.cat((input_f, Hidden_State_f), 1)
         
@@ -150,4 +144,72 @@ class BiLSTM(nn.Module):
             Hidden_State_b = Variable(torch.zeros(batch_size, self.hidden_size))
             Cell_State_b = Variable(torch.zeros(batch_size, self.hidden_size))
             return Hidden_State_f, Cell_State_f, Hidden_State_b, Cell_State_b
+        
+class GraphConvolutionalLSTM(nn.Module):
+    
+    def __init__(self, K, A, feature_size):
+        '''
+        Args:
+            K: K-hop graph
+            A: adjacency matrix
+        '''
+        super(GraphConvolutionalLSTM, self).__init__()
+        self.feature_size = feature_size
+        self.hidden_size = feature_size
+        
+        # here K = 3
+        self.A1 = torch.Tensor(A)
+        self.A2 = torch.matmul(self.A1, torch.Tensor(A))
+        self.A3 = torch.matmul(self.A2, torch.Tensor(A))
+#         self.filter_linear = nn.Linear(feature_size, feature_size)
+        self.GC_1 = FilterLinear(feature_size, feature_size, self.A1)
+        self.GC_2 = FilterLinear(feature_size, feature_size, self.A2)
+        self.GC_3 = FilterLinear(feature_size, feature_size, self.A3)
+        
+        hidden_size = self.feature_size
+        input_size = self.feature_size * K
+
+        self.fl = nn.Linear(input_size + hidden_size, hidden_size)
+        self.il = nn.Linear(input_size + hidden_size, hidden_size)
+        self.ol = nn.Linear(input_size + hidden_size, hidden_size)
+        self.Cl = nn.Linear(input_size + hidden_size, hidden_size)
+        
+    def forward(self, input, Hidden_State, Cell_State):
+        
+        x = input
+        gc_1 = self.GC_1(x)
+        gc_2 = self.GC_2(x)
+        gc_3 = self.GC_3(x)
+        gc = torch.cat((gc_1, gc_2, gc_3), 1)
+            
+        combined = torch.cat((gc, Hidden_State), 1)
+        f = F.sigmoid(self.fl(combined))
+        i = F.sigmoid(self.il(combined))
+        o = F.sigmoid(self.ol(combined))
+        C = F.tanh(self.Cl(combined))
+        Cell_State = f * Cell_State + i * C
+        Hidden_State = o * F.tanh(Cell_State)
+        
+        return Hidden_State, Cell_State
+    
+    def loop(self, inputs):
+        batch_size = inputs.size(0)
+        time_step = inputs.size(1)
+        Hidden_State, Cell_State = self.initHidden(batch_size)
+        for i in range(time_step):
+            Hidden_State, Cell_State = self.forward(torch.squeeze(inputs[:,i:i+1,:]), Hidden_State, Cell_State)  
+        return Hidden_State, Cell_State
+    
+    def initHidden(self, batch_size):
+        use_gpu = torch.cuda.is_available()
+        if use_gpu:
+            Hidden_State = Variable(torch.zeros(batch_size, self.hidden_size).cuda())
+            Cell_State = Variable(torch.zeros(batch_size, self.hidden_size).cuda())
+            return Hidden_State, Cell_State
+        else:
+            Hidden_State = Variable(torch.zeros(batch_size, self.hidden_size))
+            Cell_State = Variable(torch.zeros(batch_size, self.hidden_size))
+            return Hidden_State, Cell_State
+        
+        
         
