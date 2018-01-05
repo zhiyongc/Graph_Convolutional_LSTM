@@ -331,7 +331,7 @@ if __name__ == "__main__":
     
     train_dataloader, test_dataloader = PrepareDataset(speed_matrix)
 #    rnn, rnn_losses = TrainRNN(train_dataloader, num_epochs = 10)
-#    lstm, lstm_losses = TrainLSTM(train_dataloader, num_epochs = 10)
+    lstm, lstm_losses = TrainLSTM(train_dataloader, num_epochs = 1)
     K = 3
-    gclstm, gclstm_losses = TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 10)
+    gclstm, gclstm_losses = TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 1)
     
