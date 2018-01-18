@@ -271,7 +271,7 @@ def TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 3):
     return gclstm, losses
 
 
-def TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, A, D, WffRA, max_speed, delta_T, num_epochs = 3):
+def TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, A, D, WffRA, max_speed, delta_T, num_epochs = 3, SW=True):
     
     inputs, labels = next(iter(train_dataloader))
     [batch_size, step_size, fea_size] = inputs.size()
@@ -279,7 +279,10 @@ def TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, A, D, WffRA, max_sp
     hidden_dim = fea_size
     output_dim = fea_size
     
-    agclstm = AdaptiveGraphConvolutionalLSTM(K, batch_size, step_size, fea_size)
+    if SW:
+        agclstm = AdaptiveGraphConvolutionalLSTM(K, batch_size, step_size, fea_size)
+    else:
+        agclstm = AdaptiveGraphConvolutionalLSTM_MW(K, batch_size, step_size, fea_size)
     agclstm.initReachableMatrixTensors(A, D, WffRA, max_speed, delta_T)
     
     agclstm.cuda()
@@ -354,10 +357,12 @@ if __name__ == "__main__":
     ffRA, WffRA = GetFreeFlowReachableAdjacencyMatrix(A, D, delta_T = delta_T, ff_speed = 60.)
     
     train_dataloader, test_dataloader, max_speed = PrepareDataset(speed_matrix)
-    rnn, rnn_losses = TrainRNN(train_dataloader, num_epochs = 1)
-    lstm, lstm_losses = TrainLSTM(train_dataloader, num_epochs = 1)
+#    rnn, rnn_losses = TrainRNN(train_dataloader, num_epochs = 1)
+#    lstm, lstm_losses = TrainLSTM(train_dataloader, num_epochs = 1)
     
     K = 3
-    gclstm, gclstm_losses = TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 1)
+#    gclstm, gclstm_losses = TrainGraphConvolutionalLSTM(train_dataloader, A, K, num_epochs = 1)
+#    
+#    agclstm, agclstm_losses = TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, DA, D, WffRA, max_speed, delta_T, num_epochs = 1, SW = True)
     
-    agclstm, agclstm_losses = TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, DA, D, WffRA, max_speed, delta_T, num_epochs = 1)
+    agclstm_mw, agclstm_mw_losses = TrainAdaptiveGraphConvolutionalLSTM(train_dataloader, K, DA, D, WffRA, max_speed, delta_T, num_epochs = 1, SW = False)
