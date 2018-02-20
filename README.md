@@ -1,4 +1,5 @@
-# Adaptive Graph Convolutional LSTM for learning traffic network
+# High-Order Graph Convolutional Recurrent Neural Network
+## A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting
 
 ## Data 
 The data used in the code can be downloaded from this link: https://sites.google.com/uw.edu/zhiyongc/home. 
