@@ -13,7 +13,7 @@
 
 
 ### Data 
-The data used in the code can be downloaded from this link: https://sites.google.com/uw.edu/zhiyongc/home. 
+The data used in the code can be downloaded from this link: https://uwnetid-my.sharepoint.com/:f:/r/personal/zhiyongc_uw_edu/Documents/Projects/GraphCovolutionLSTM/Data?csf=1&e=rNaDjb
 
 ### Results
 The results and comparison can be found in the wiki: https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki
