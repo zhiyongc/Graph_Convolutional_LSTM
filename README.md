@@ -13,7 +13,7 @@
 
 ### Results
 Training Comparison with other Methods
-![alt text](/Images/Training_Compare_Model.png){:height="700px" width="400px"}
+![alt text](/Images/Training_Compare_Model.png | width=100){:height="700px" width="400px"}
 
 ### Data 
 The data used in the code can be downloaded from this link: https://drive.google.com/drive/folders/1Mw8tjiPD-wknFu6dY5NTw4tqOiu5X9rz?usp=sharing
