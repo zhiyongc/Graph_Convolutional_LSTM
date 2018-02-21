@@ -37,7 +37,6 @@ Please cite our paper if you use this code or data in your own work:
   Year = {2018},
   Eprint = {arXiv:1802.07007},
 }
-}
 ```
 
 
