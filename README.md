@@ -12,9 +12,7 @@
 
 
 ### Results
-Training Comparison with other Methods
-
-<img src="/Images/Training_Compare_Model.png" width="400"><img src="/Images/Training_Compare_K.png" width="400">
+The results can be found in the [WiKi](https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki)
 
 ### Data 
 The data used in the code can be downloaded from this link: https://drive.google.com/drive/folders/1Mw8tjiPD-wknFu6dY5NTw4tqOiu5X9rz?usp=sharing
