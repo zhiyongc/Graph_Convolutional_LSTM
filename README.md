@@ -13,6 +13,7 @@
 
 ### Results
 Training Comparison with other Methods
+
 <img src="/Images/Training_Compare_Model.png" width="400">
 
 ### Data 
