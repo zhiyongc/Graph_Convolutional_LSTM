@@ -19,6 +19,7 @@ The data used in the code can be downloaded from this link: https://drive.google
 The results and comparison can be found in the wiki: https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki
 
 ### Cite
+[High-Order Graph Convolutional Recurrent Neural Network: A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting](https://arxiv.org/abs/1802.07007)
 ```
 {
 }
