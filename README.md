@@ -13,7 +13,7 @@
 
 ### Results
 Training Comparison with other Methods
-![alt text](https://github.com/zhiyongc/GraphConvolutionalLSTM/blob/master/Images/Training_Compare_Model.png =250x)
+![alt text](https://github.com/zhiyongc/GraphConvolutionalLSTM/blob/master/Images/Training_Compare_Model.png){:height="50%" width="50%"}
 
 ### Data 
 The data used in the code can be downloaded from this link: https://drive.google.com/drive/folders/1Mw8tjiPD-wknFu6dY5NTw4tqOiu5X9rz?usp=sharing
