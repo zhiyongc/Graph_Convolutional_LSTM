@@ -13,9 +13,12 @@
 
 ### Results
 The results can be found in the [WiKi](https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki)
-<!--
+
 ## Data 
-To run the code, you need to download the data from the following link: https://drive.google.com/drive/folders/1Mw8tjiPD-wknFu6dY5NTw4tqOiu5X9rz?usp=sharing and put them in the "Data" folder. The data contains two traffic networks in Seattle: a loop detector based freeway network and an INRIX data-based urban traffic network. The details about these netowrk is described in the reference paper.
+To run the code, you need to download the loop detector data from my GitHub link: https://github.com/zhiyongc/Seattle-Loop-Data and put them in the "Data" folder. For confidentiality, the INRIX data can not be shared.
+
+<!--
+
 
 Description of the datasets:
 * `inrix_seattle_speed_matrix_2012`: INRIX Speed Matrix (read by Pandas)
