@@ -9,13 +9,19 @@ Extension version of **High-order Graph Convolutional Recurrent Neural Network**
 * Python 3.6.1
 * PyTorch 0.3.0
 
-### Model Structure
-![alt text](/Images/HGC-LSTM2.tiff)
+### TGC-LSTM Model Structure
+![alt text](/Images/HGC-LSTM2.png)
+* The 2nd version of the structure of Traffic Graph Convolutional LSTM (TGC-LSTM). 
+* The traffic graph convolution module is designed based on the physical network topology.
+* The code of this model is in the Code_V2 folder.
 ![alt text](/Images/HGC-LSTM.png)
+* The 1st version of Traffic Graph Convolutional LSTM. 
+* The code of this model is in the Code_V1 folder.
 
-
-### Results
-The results can be found in the [WiKi](https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki)
+### Experimental Results 
+Validation Loss Comparison Chart
+![alt text](/Images/V2_Validation_loss.png)
+<!-- The results can be found in the [WiKi](https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki) --->
 
 ## Data 
 To run the code, you need to download the loop detector data from my GitHub link: https://github.com/zhiyongc/Seattle-Loop-Data and put them in the "Data" folder. For confidentiality, the INRIX data can not be shared.
