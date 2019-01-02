@@ -1,7 +1,7 @@
 ### Traffic Graph Convolutional Recurrent Neural Network
 ### A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting
 ------
-###### Extended version of **High-order Graph Convolutional Recurrent Neural Network**
+##### Extended version of *High-order Graph Convolutional Recurrent Neural Network*
 
 
 
@@ -17,7 +17,8 @@
 
 ------
 
-### 1st version of the TGC-LSTM Model Structure
+### 1st version of the High-order Graph Convolutional Recurrent Neural Network Structure 
+
 <img src="/Images/HGC-LSTM.png" alt="drawing" width="800"/>
 
 * The 1st version of Traffic Graph Convolutional LSTM. 
