@@ -1,7 +1,7 @@
 ### Traffic Graph Convolutional Recurrent Neural Network
 ### A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting
 ------
-Extended version of **High-order Graph Convolutional Recurrent Neural Network**
+###### Extended version of **High-order Graph Convolutional Recurrent Neural Network**
 
 
 
