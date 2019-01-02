@@ -7,9 +7,11 @@
 
 ### 2nd version of the TGC-LSTM Model Structure
 
-![alt text](/Images/HGC-LSTM2.png)
+![alt text](/Images/TGC-LSTM.png)
 
 * The 2nd version of the structure of Traffic Graph Convolutional LSTM (TGC-LSTM). 
+  * ![equation](http://mathurl.com/y9brdy6u.png) is the K-th order adjacency matrix
+  * ![equation](http://mathurl.com/y6w9d7bj.png) is the Free Flow Reachability matrix defined based on the network physical topology information.
 * The traffic graph convolution module is designed based on the physical network topology.
 * The code of this model is in the Code_V2 folder.
   * Environment (Jupyter Notebook): Python 3.6.1 and PyTorch 0.4.1
