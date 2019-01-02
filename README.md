@@ -1,13 +1,15 @@
-# High-Order Graph Convolutional Recurrent Neural Network
-## A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting
+# Traffic Graph Convolutional Recurrent Neural Network: A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting
 
-###
+Extension version of **High-order Graph Convolutional Recurrent Neural Network**
+
+### 
 
 ### Environment
 * Python 3.6.1
 * PyTorch 0.3.0
 
 ### Model Structure
+![alt text](/Images/HGC-LSTM2.tiff)
 ![alt text](/Images/HGC-LSTM.png)
 
 
