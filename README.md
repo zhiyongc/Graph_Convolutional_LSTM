@@ -26,22 +26,33 @@
 * The 1st version of Traffic Graph Convolutional LSTM. 
 * The code of this model is in the Code_V1 folder.
   * Environment: Python 3.6.1 and PyTorch 0.3.0
-  
+
+------
+### Dataset
+The model is tested on two real-world network-wide traffic speed dataset, loop detector data and INRIX data. The following figure shows the covered areas. (a) Seattle freeway network; (b) Seattle downtown roadway network.
+
+<img src="/Images/dataset.png" alt="drawing" width="400"/>
+
+Check out this [Link](https://github.com/zhiyongc/Seattle-Loop-Data) for looking into and downloading the **loop detecotr dataset**. For confidentiality reasons, the **INRIX dataset** can not be shared.
+
+To run the code, you need to download the loop detector data and the network topology information and put them in the proper "Data" folder. 
+
 ------
 
 ### Experimental Results 
-###### Validation Loss Comparison Chart
-<img src="/Images/V2_Validation_loss.png" alt="drawing" width="400"/>
+###### Validation Loss Comparison Chart & Model Performance with respect to the number of K
+<img src="/Images/V2_Validation_loss.png" alt="drawing" width="400"/><img src="/Images/K_results.png" alt="drawing" width="350"/>
 
-For more detailed experimental results, please refer to [our paper](https://arxiv.org/abs/1802.07007).
+For more detailed experimental results, please refer to [the paper](https://arxiv.org/abs/1802.07007).
 <!-- The results can be found in the [WiKi](https://github.com/zhiyongc/GraphConvolutionalLSTM/wiki) --->
-
 ------
 
-### Data 
-To run the code, you need to download the loop detector data and the network topology information from the link: https://github.com/zhiyongc/Seattle-Loop-Data and put them in the "Data" folder. 
+### Visualization
+###### Visualization of graph convolution (GC) weight matrices (averaged, K=3) & weight values on real maps
+<img src="/Images/weight_matrix.png" alt="drawing" width="600"/>
+<img src="/Images/visualization.png" alt="drawing" width="700"/>
+------
 
-For confidentiality, the INRIX data can not be shared.
 
 <!--
 
