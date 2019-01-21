@@ -50,9 +50,7 @@ For more detailed experimental results, please refer to [the paper](https://arxi
 ### Visualization
 ###### Visualization of graph convolution (GC) weight matrices (averaged, K=3) & weight values on real maps
 <img src="/Images/weight_matrix.png" alt="drawing" width="600"/>
-<img src="/Images/visualization.png" alt="drawing" width="700"/>
-------
-
+<img src="/Images/visualization.png" alt="drawing" width="680"/>
 
 <!--
 
