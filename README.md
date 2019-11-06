@@ -75,8 +75,8 @@ Please cite our paper if you use this code or data in your own work:
 
 Hope our work is benefitial for you. Thanks!
 ```
-@article{cui2018high,
-  title={High-Order Graph Convolutional Recurrent Neural Network: A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting},
+@article{cui2018traffic,
+  title={Traffic graph convolutional recurrent neural network: A deep learning framework for network-scale traffic learning and forecasting},
   author={Cui, Zhiyong and Henrickson, Kristian and Ke, Ruimin and Wang, Yinhai},
   journal={arXiv preprint arXiv:1802.07007},
   year={2018}
