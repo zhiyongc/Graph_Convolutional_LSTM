@@ -75,11 +75,12 @@ Please cite our paper if you use this code or data in your own work:
 
 Hope our work is benefitial for you. Thanks!
 ```
-@article{cui2018traffic,
+@article{cui2019traffic,
   title={Traffic graph convolutional recurrent neural network: A deep learning framework for network-scale traffic learning and forecasting},
   author={Cui, Zhiyong and Henrickson, Kristian and Ke, Ruimin and Wang, Yinhai},
-  journal={arXiv preprint arXiv:1802.07007},
-  year={2018}
+  journal={IEEE Transactions on Intelligent Transportation Systems},
+  year={2019},
+  publisher={IEEE}
 }
 ```
 
