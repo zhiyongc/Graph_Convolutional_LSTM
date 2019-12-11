@@ -71,7 +71,7 @@ Description of the datasets:
 
 ### Updated Citation
 Please cite our paper if you use this code or data in your own work:
-[Traffic Graph Convolutional Recurrent Neural Network: A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting](https://arxiv.org/abs/1802.07007) 
+[Traffic Graph Convolutional Recurrent Neural Network: A Deep Learning Framework for Network-Scale Traffic Learning and Forecasting](https://ieeexplore.ieee.org/abstract/document/8917706) 
 
 Hope our work is benefitial for you. Thanks!
 ```
